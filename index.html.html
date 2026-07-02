@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科治新技 KTT Pro Clean Tech · 企業識別系統 / Identity System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F7FA; --paper:#FFFFFF; --ink:#0F1419; --graphite:#1B242D;
+  --mut:#586573; --mut2:#8C97A4; --faint:#B7C0CA;
+  --line:#E4E9EE; --line2:#D1D9E1; --line3:#EEF2F6;
+  --noncu:#96A0AB; --cu:#BC8A16; --co:#2E9E5B; --metal:#2E72C4; --dif:#7A68A6;
+  --noncuB:#C3C9D1; --cuB:#E3B341; --coB:#4FB477; --metalB:#4F93E0; --difB:#9B8CC0;
+  --alert:#D84A34; --rush:#E5852A; --hold:#CE4B8E;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Noto Sans TC","Space Grotesk",system-ui,-apple-system,"Microsoft JhengHei",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.72;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.mono{font-family:var(--mono);letter-spacing:.01em;font-feature-settings:"tnum"}
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,44px);position:relative}
+:focus-visible{outline:2px solid var(--metal);outline-offset:3px;border-radius:3px}
+
+/* tick divider */
+.rule{height:1px;background:var(--line2);position:relative;margin:0}
+.rule::before,.rule::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--line2)}
+.rule::before{left:0}.rule::after{right:0}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto 0;z-index:60;background:rgba(245,247,250,.82);backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.02em;font-size:15px}
+.brand .marks{display:flex;gap:3px}
+.brand .marks i{width:8px;height:8px;display:block}
+.brand .marks .m0{border-radius:50%;background:var(--noncu)}
+.brand .marks .m1{background:var(--cu);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.brand .marks .m2{background:var(--co)}
+.brand .marks .m3{background:var(--metal);transform:rotate(45deg)}
+.brand .marks .m4{background:var(--dif);clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%)}
+.brand small{color:var(--mut);font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.04em}
+.navlinks{margin-left:auto;display:flex;gap:15px;font-size:12.5px;color:var(--mut)}
+.navlinks a{transition:color .2s;padding:4px 0;position:relative}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--ink);transition:width .25s}
+.navlinks a:hover::after{width:100%}
+.langtog{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden;font-family:var(--mono);font-size:12px}
+.langtog button{background:none;border:none;padding:7px 12px;cursor:pointer;color:var(--mut);transition:.2s}
+.langtog button.on{background:var(--ink);color:var(--paper)}
+.menubtn{display:none;background:none;border:1px solid var(--line2);border-radius:8px;padding:8px 12px;font-family:var(--mono);cursor:pointer}
+@media(max-width:900px){.navlinks{display:none}.menubtn{display:block}}
+
+/* HERO */
+.hero{padding:132px 0 84px;position:relative;overflow:hidden}
+.hero .grid-bg{position:absolute;inset:0;opacity:.25;transition:opacity 1.1s ease;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:radial-gradient(120% 90% at 50% 20%,#000 40%,transparent 90%)}
+.hero.cleaned .grid-bg{opacity:.55}
+.hero .wrap{position:relative;z-index:2}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--mut);text-transform:uppercase;
+  display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.eyebrow::before{content:"";width:38px;height:1px;background:var(--line2)}
+.hero h1{font-size:clamp(40px,7.4vw,94px);line-height:.98;letter-spacing:-.02em;margin:0;font-weight:900}
+.hero h1 .en{font-family:var(--disp);font-weight:600}
+.hero .lede{font-size:clamp(15px,1.7vw,19px);color:var(--mut);max-width:660px;margin:28px 0 0;font-weight:300}
+.hero .capvoc{margin-top:34px;display:flex;flex-wrap:wrap;gap:8px 0;align-items:center;font-family:var(--mono);font-size:12px;color:var(--mut2)}
+.hero .capvoc span{white-space:nowrap}
+.hero .capvoc b{color:var(--graphite);font-weight:500}
+.hero .capvoc .sep{margin:0 12px;color:var(--line2)}
+
+.stage-hero{position:relative;margin-top:52px;height:190px;border:1px solid var(--line);border-radius:16px;background:var(--paper);overflow:hidden}
+.stage-hero canvas{display:block;width:100%;height:100%}
+.stage-hero .replay{position:absolute;right:12px;bottom:12px;z-index:3;background:var(--paper);border:1px solid var(--line2);
+  border-radius:9px;padding:7px 13px;font-family:var(--mono);font-size:11px;color:var(--mut);cursor:pointer;display:flex;gap:8px;align-items:center;transition:.2s}
+.stage-hero .replay:hover{color:var(--ink);border-color:var(--ink)}
+.stage-hero .readout{position:absolute;left:14px;top:12px;z-index:3;font-family:var(--mono);font-size:10px;color:var(--mut2);letter-spacing:.06em}
+
+/* SECTION */
+section{padding:clamp(64px,8vw,104px) 0;position:relative}
+.sechead{margin-bottom:14px}
+.sec-ix{font-family:var(--mono);font-size:12px;color:var(--mut2);letter-spacing:.18em;display:flex;align-items:center;gap:10px}
+.sec-ix::before{content:"";width:16px;height:1px;background:var(--line2)}
+.sechead h2{font-size:clamp(28px,4vw,46px);font-weight:900;letter-spacing:-.015em;margin:12px 0 0;line-height:1.05}
+.sechead h2 .en{font-family:var(--disp);font-weight:600}
+.sec-sub{color:var(--mut);max-width:600px;margin:20px 0 48px;font-weight:300}
+
+/* PRINCIPLES */
+.prin{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+@media(max-width:820px){.prin{grid-template-columns:1fr}}
+.prin .p{background:var(--paper);padding:32px 28px;transition:background .3s}
+.prin .p:hover{background:#FBFCFD}
+.prin .p .no{font-family:var(--mono);font-size:12px;color:var(--mut2);letter-spacing:.1em}
+.prin .p h3{font-size:19px;margin:16px 0 12px;font-weight:700;line-height:1.35}
+.prin .p p{color:var(--mut);font-size:14px;font-weight:300;margin:0}
+.prin .p .glyph{margin-top:22px;color:var(--graphite);opacity:.9}
+.prin .p .glyph svg{width:30px;height:30px}
+
+/* COLOR */
+.tog{display:inline-flex;background:var(--paper);border:1px solid var(--line2);border-radius:10px;padding:4px;gap:2px;margin-bottom:30px}
+.tog button{background:none;border:none;color:var(--mut);font-family:var(--mono);font-size:12px;padding:8px 16px;border-radius:7px;cursor:pointer;transition:.2s}
+.tog button.on{background:var(--ink);color:var(--paper)}
+.fam-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+@media(max-width:960px){.fam-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.fam-grid{grid-template-columns:1fr}}
+.fam{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;overflow:hidden;
+  transform:translateY(20px);opacity:0;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .7s,box-shadow .3s,border-color .3s}
+.fam.in{transform:none;opacity:1}
+.fam:hover{box-shadow:0 14px 40px -18px rgba(15,20,25,.28);border-color:var(--line2)}
+.fam .swatch{height:88px;border-radius:11px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.fam h3{margin:0;font-size:20px;font-weight:700;font-family:var(--disp)}
+.fam .cn{color:var(--mut);font-size:13px;margin-top:1px}
+.fam .meta{margin-top:15px;font-family:var(--mono);font-size:11px;color:var(--mut2);display:flex;flex-direction:column;gap:5px}
+.fam .meta b{color:var(--graphite);font-weight:500}
+.fam .lines{margin-top:14px;display:flex;flex-wrap:wrap;gap:5px}
+.fam .lines span{font-family:var(--mono);font-size:10px;color:var(--mut);border:1px solid var(--line2);border-radius:6px;padding:3px 7px}
+.fam .bag{position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:10px;color:var(--mut2)}
+
+/* BUILD */
+.build{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:center}
+@media(max-width:880px){.build{grid-template-columns:1fr}}
+.stage{background:var(--paper);border:1px solid var(--line);border-radius:20px;aspect-ratio:1/1;position:relative;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stage .glines{position:absolute;inset:0;opacity:.5;transition:opacity .3s}
+.stage svg.big{width:60%;height:60%;position:relative;z-index:2;color:var(--graphite)}
+.stagebar{position:absolute;inset:auto 0 0 0;display:flex;border-top:1px solid var(--line);background:#FCFDFE}
+.stagebar button{flex:1;background:none;border:none;border-right:1px solid var(--line);color:var(--mut2);
+  font-family:var(--mono);font-size:11px;padding:13px 4px;cursor:pointer;transition:.2s}
+.stagebar button:last-child{border-right:none}
+.stagebar button.on{color:var(--ink);background:var(--paper)}
+.pick{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:26px}
+.pick button{background:var(--paper);border:1px solid var(--line);color:var(--mut);border-radius:10px;padding:9px 13px;
+  font-size:13px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:8px}
+.pick button svg{width:18px;height:18px;color:var(--graphite)}
+.pick button.on{border-color:var(--ink);color:var(--ink);background:#FBFCFD}
+.build-info h3{font-size:25px;margin:0 0 4px;font-family:var(--disp);font-weight:600}
+.build-info h3 .cn{font-family:var(--sans);font-weight:700}
+.build-info .role{font-family:var(--mono);font-size:12px;color:var(--mut2);letter-spacing:.12em;margin-bottom:20px}
+.build-info .why{color:var(--mut);font-weight:300;margin:0 0 22px}
+.build-info .steps{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:13px}
+.build-info .steps li{display:flex;gap:14px;font-size:13.5px;color:var(--mut)}
+.build-info .steps li .n{font-family:var(--mono);font-size:11px;color:var(--mut2);min-width:22px;padding-top:2px}
+.build-info .steps li b{color:var(--ink);font-weight:500}
+
+.dw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
+.drawn .dw{stroke-dashoffset:0}
+.fdw{opacity:0;transition:opacity .5s ease .3s}
+.drawn .fdw{opacity:1}
+.guide{stroke:var(--metal);stroke-width:.4;fill:none;opacity:0;transition:opacity .4s;stroke-dasharray:1.4 1.4}
+.showguide .guide{opacity:.65}
+
+/* LIBRARY */
+.grouptab{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.grouptab button{background:var(--paper);border:1px solid var(--line2);color:var(--mut);border-radius:22px;
+  padding:8px 18px;font-size:13px;cursor:pointer;transition:.2s}
+.grouptab button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.lib{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:960px){.lib{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.lib{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 14px 16px;text-align:center;
+  position:relative;cursor:pointer;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 16px 34px -20px rgba(15,20,25,.3)}
+.card .gridbg{position:absolute;inset:0;opacity:0;transition:opacity .3s;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:11px 11px}
+.card:hover .gridbg{opacity:.5}
+.card .ico{width:46px;height:46px;margin:4px auto 14px;position:relative;z-index:2}
+.card .ico svg{width:100%;height:100%;color:var(--graphite)}
+.card .nm{font-size:13.5px;font-weight:500;position:relative;z-index:2}
+.card .en{font-family:var(--mono);font-size:10px;color:var(--mut2);margin-top:3px;position:relative;z-index:2}
+.card .rat{font-size:11px;color:var(--mut);margin-top:9px;min-height:30px;line-height:1.5;font-weight:300;position:relative;z-index:2}
+
+/* NAMING */
+.filename{font-family:var(--mono);font-size:clamp(14px,2.3vw,26px);display:flex;flex-wrap:wrap;justify-content:center;
+  padding:38px 20px;background:var(--paper);border:1px solid var(--line);border-radius:16px}
+.seg{position:relative;padding:10px 4px;border-radius:8px;transition:all .55s cubic-bezier(.2,.7,.2,1);white-space:nowrap}
+.split .seg{margin:0 5px;padding:10px 13px}
+.seg .tag{position:absolute;top:-24px;left:50%;transform:translateX(-50%) translateY(6px);font-family:var(--sans);
+  font-size:10px;color:var(--mut2);opacity:0;transition:.5s;white-space:nowrap}
+.split .seg .tag{opacity:1;transform:translateX(-50%)}
+.sep{color:var(--mut2);padding:10px 0;transition:opacity .4s}
+.split .sep{opacity:0}
+.namekey{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:40px}
+@media(max-width:760px){.namekey{grid-template-columns:1fr 1fr}}
+.namekey .k{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px}
+.namekey .k .lab{font-family:var(--mono);font-size:11px;color:var(--mut2);margin-bottom:8px}
+.namekey .k .val{font-size:13px;color:var(--mut);font-weight:300}
+.namekey .k b{color:var(--ink);font-family:var(--mono);font-weight:500}
+.hintbar{margin-top:26px;font-size:13px;color:var(--mut);font-weight:300;display:flex;gap:12px;align-items:flex-start}
+.hintbar .mono{color:var(--ink)}
+
+/* DECK */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){.pgrid{grid-template-columns:1fr}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px}
+.panel h3{margin:0 0 20px;font-size:13px;font-family:var(--mono);color:var(--mut2);letter-spacing:.12em;font-weight:500}
+.scale{display:flex;flex-direction:column;gap:16px}
+.scale .row{display:flex;align-items:baseline;gap:16px;border-bottom:1px dashed var(--line);padding-bottom:14px}
+.scale .row:last-child{border:none;padding:0}
+.scale .row .meta{font-family:var(--mono);font-size:10px;color:var(--mut2);min-width:104px}
+.slide{aspect-ratio:16/9;background:#FBFCFD;border:1px solid var(--line);border-radius:12px;padding:26px 30px;color:#141b26;
+  position:relative;overflow:hidden;box-shadow:0 20px 50px -26px rgba(15,20,25,.4)}
+.slide .stripe{position:absolute;inset:0 auto 0 0;width:6px}
+.slide .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#5a6675;text-transform:uppercase}
+.slide h4{font-size:22px;margin:8px 0 4px;font-weight:700}
+.slide .sl-sub{font-size:12px;color:#5a6675}
+.slide .chips{display:flex;gap:7px;margin-top:20px;flex-wrap:wrap}
+.slide .chips span{font-family:var(--mono);font-size:10px;padding:5px 9px;border-radius:6px;color:#fff}
+.slide .foot{position:absolute;inset:auto 30px 16px 30px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:#8a94a2}
+.tokrow{display:flex;gap:8px;margin-top:10px}
+.tokrow .t{flex:1;height:44px;border-radius:8px;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.tokrow .t span{position:absolute;inset:auto auto 4px 6px;font-family:var(--mono);font-size:8px}
+
+/* STATUS */
+.statusstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+@media(max-width:680px){.statusstrip{grid-template-columns:1fr}}
+.st{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--paper);position:relative;display:flex;gap:14px;align-items:center;overflow:hidden}
+.st .bar{position:absolute;inset:0 auto 0 0;width:4px}
+.st svg{width:30px;height:30px;flex:none}
+.st .txt b{display:block;font-size:15px}
+.st .txt small{color:var(--mut);font-size:12px;font-weight:300}
+
+footer{padding:60px 0 84px;border-top:1px solid var(--line);color:var(--mut2);font-size:13px;text-align:center}
+footer .mono{color:var(--mut)}
+footer .fbrand{font-family:var(--disp);font-weight:600;color:var(--ink);font-size:15px;letter-spacing:.02em}
+
+/* CLEAN-LINE BANDS */
+.bands{display:flex;flex-direction:column;gap:12px}
+.band{position:relative;height:clamp(58px,9vw,88px);border-radius:14px;overflow:hidden;display:flex;align-items:center;
+  padding:0 clamp(18px,3vw,34px);transform:scaleX(0);transform-origin:left;opacity:0;
+  transition:transform 1s cubic-bezier(.19,1,.22,1),opacity .5s}
+.band.in{transform:scaleX(1);opacity:1}
+.band::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 18%,rgba(255,255,255,.5) 50%,transparent 82%);
+  background-size:250% 100%;animation:sheen 6s linear infinite;pointer-events:none;mix-blend-mode:overlay}
+@keyframes sheen{0%{background-position:210% 0}100%{background-position:-70% 0}}
+.band .bshape{flex:none;margin-right:18px;display:flex}
+.band .bname{font-family:var(--disp);font-weight:700;font-size:clamp(21px,3.1vw,36px);letter-spacing:-.01em;line-height:1}
+.band .bcn{font-size:13px;opacity:.85;margin-left:12px;font-weight:500}
+.band .bcodes{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.band .bcodes span{font-family:var(--mono);font-size:11px;background:rgba(15,20,25,.15);border-radius:6px;padding:4px 9px}
+@media(max-width:640px){.band .bcodes{display:none}}
+
+/* PACKAGING BAGS */
+.bags{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.bags{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.bags{grid-template-columns:1fr}}
+.bag-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px;position:relative;transition:box-shadow .3s,border-color .3s}
+.bag-card:hover{box-shadow:0 14px 40px -20px rgba(15,20,25,.28);border-color:var(--line2)}
+.bag-card .bagsvg{display:flex;justify-content:center;margin-bottom:14px}
+.bag-card h3{margin:0;font-size:17px;font-weight:700}
+.bag-card .bsub{color:var(--mut);font-size:12px;margin-top:2px}
+.bag-card .blines{margin-top:12px;display:flex;flex-wrap:wrap;gap:5px}
+.bag-card .blines span{font-family:var(--mono);font-size:10px;color:var(--mut);border:1px solid var(--line2);border-radius:6px;padding:3px 7px}
+.bag-card .btag{position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:6px}
+.bag-note{margin-top:18px;background:#FBFCFD;border:1px solid var(--line);border-left:3px solid var(--metal);border-radius:10px;
+  padding:14px 18px;font-size:13px;color:var(--mut);font-weight:300}
+
+/* CARTS */
+.cartwrap{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+@media(max-width:860px){.cartwrap{grid-template-columns:1fr}}
+.cart-stage{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;align-items:center;justify-content:center}
+.cart-stage svg{width:100%;max-width:360px;height:auto}
+#cartBody{transition:fill .4s}
+.cart-ctrl{margin-bottom:22px}
+.cart-ctrl .lab{font-family:var(--mono);font-size:11px;color:var(--mut2);letter-spacing:.1em;margin-bottom:9px}
+.cart-ctrl .opts{display:flex;gap:8px;flex-wrap:wrap}
+.cart-ctrl .opts button{background:var(--paper);border:1px solid var(--line);color:var(--mut);border-radius:9px;
+  padding:8px 12px;font-size:12.5px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:7px}
+.cart-ctrl .opts button .sw{width:12px;height:12px;border-radius:3px;flex:none}
+.cart-ctrl .opts button.on{border-color:var(--ink);color:var(--ink);background:#FBFCFD}
+.cart-note{font-size:13px;color:var(--mut);font-weight:300;margin-top:4px}
+
+/* CODE TABLE */
+.codewrap{margin-top:56px}
+.codewrap .subhead{font-family:var(--mono);font-size:12px;color:var(--mut2);letter-spacing:.14em;margin-bottom:6px}
+.codewrap h3{font-size:22px;font-weight:700;margin:0 0 8px}
+.codewrap .cdesc{color:var(--mut);font-weight:300;max-width:600px;margin:0 0 24px}
+.codetable{width:100%;border-collapse:collapse;font-size:13px;background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.codetable th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--mut2);
+  font-weight:500;padding:13px 16px;border-bottom:1px solid var(--line2);background:#FBFCFD}
+.codetable td{padding:11px 16px;border-bottom:1px solid var(--line3);color:var(--mut);vertical-align:middle}
+.codetable tr:last-child td{border-bottom:none}
+.codetable tr:hover td{background:#FBFCFD}
+.codetable .code{font-family:var(--mono);color:var(--ink);font-weight:500;white-space:nowrap}
+.codetable .ico24{width:22px;height:22px;color:var(--graphite)}
+.codetable .grp{font-family:var(--mono);font-size:11px;color:var(--mut2)}
+
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.001s!important}.dw{stroke-dashoffset:0}.fdw,.fam{opacity:1}.fam{transform:none}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="brand"><span class="marks"><i class="m0"></i><i class="m1"></i><i class="m2"></i><i class="m3"></i><i class="m4"></i></span>
+    科治新技 <small>KTT PRO CLEAN TECH</small></div>
+  <div class="navlinks" id="navlinks"></div>
+  <div class="langtog" id="langTog"><button data-l="zh" class="on">中</button><button data-l="en">EN</button></div>
+  <button class="menubtn" onclick="var n=document.getElementById('navlinks');n.style.display=getComputedStyle(n).display=='none'?'flex':'none'">≡</button>
+</div></nav>
+
+<header class="hero" id="hero">
+  <div class="grid-bg"></div>
+  <div class="wrap">
+    <div class="eyebrow" data-zh="企業識別系統 · v1" data-en="Corporate Identity System · v1"></div>
+    <h1 id="heroH1"></h1>
+    <p class="lede" id="heroLede"></p>
+    <div class="capvoc" id="capvoc"></div>
+    <div class="stage-hero">
+      <div class="readout mono" id="readout">CONTAMINATION · 汙染</div>
+      <canvas id="cleanCanvas"></canvas>
+      <button class="replay" id="replayBtn"><span>↻</span><span data-zh="重新清潔" data-en="Re-run clean"></span></button>
+    </div>
+  </div>
+</header>
+
+<section id="principles"><div class="wrap">
+  <div class="sechead"><div class="sec-ix">01</div><h2 data-zh="系統原則" data-en='<span class="en">Principles</span>'></h2></div>
+  <p class="sec-sub" data-zh="三條規則撐起整套識別。守住它們，系統就不會在擴張時崩壞。" data-en="Three rules hold the whole system together. Keep them, and the system will not degrade as it scales."></p>
+  <div class="prin" id="prin"></div>
+</div></section>
+
+<section id="color"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">02</div><h2 data-zh="色彩識別系統" data-en='<span class="en">Colour System</span>'></h2></div>
+  <p class="sec-sub" id="colorSub"></p>
+  <div class="tog" id="satTog"><button class="on" data-s="hi"></button><button data-s="lo"></button></div>
+  <div class="fam-grid" id="famGrid"></div>
+</div></section>
+
+<section id="bands"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">03</div><h2 data-zh="清洗線色彩識別" data-en='Clean-line <span class="en">colour</span>'></h2></div>
+  <p class="sec-sub" id="bandsSub"></p>
+  <div class="bands" id="bandList"></div>
+</div></section>
+
+<section id="bags"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">04</div><h2 data-zh="包裝 PE 袋分類" data-en='<span class="en">Packaging</span> · PE bags'></h2></div>
+  <p class="sec-sub" id="bagsSub"></p>
+  <div class="bags" id="bagGrid"></div>
+  <div class="bag-note" id="bagNote"></div>
+</div></section>
+
+<section id="carts"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">05</div><h2 data-zh="作業台車識別" data-en='<span class="en">Work-cart</span> identity'></h2></div>
+  <p class="sec-sub" id="cartsSub"></p>
+  <div class="cartwrap">
+    <div class="cart-stage">
+      <svg viewBox="0 0 360 320" id="cartSvg"></svg>
+    </div>
+    <div class="cart-info">
+      <div class="cart-ctrl"><div class="lab" id="cartFamLab"></div><div class="opts" id="cartFam"></div></div>
+      <div class="cart-ctrl"><div class="lab" id="cartStatLab"></div><div class="opts" id="cartStat"></div></div>
+      <div class="cart-ctrl"><div class="lab" id="cartSizeLab"></div><div class="opts" id="cartSizeOpts"></div></div>
+      <p class="cart-note" id="cartNote"></p>
+    </div>
+  </div>
+</div></section>
+
+<section id="symbols"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">06</div><h2 data-zh="符號如何被設計出來" data-en='How the <span class="en">symbols</span> are designed'></h2></div>
+  <p class="sec-sub" id="symSub"></p>
+  <div class="build">
+    <div class="stage">
+      <div class="glines"><svg viewBox="0 0 24 24" style="width:100%;height:100%"><g id="stageGrid"></g></svg></div>
+      <svg class="big" id="stageIcon" viewBox="0 0 24 24"></svg>
+      <div class="stagebar" id="stagebar"></div>
+    </div>
+    <div class="build-info">
+      <div class="pick" id="buildPick"></div>
+      <h3 id="bTitle"></h3><div class="role" id="bRole"></div>
+      <p class="why" id="bWhy"></p><ol class="steps" id="bSteps"></ol>
+    </div>
+  </div>
+</div></section>
+
+<section id="icons"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">07</div><h2 data-zh="標準化符號總覽" data-en='<span class="en">Icon Library</span>'></h2></div>
+  <p class="sec-sub" id="iconSub"></p>
+  <div class="grouptab" id="groupTab"></div>
+  <div class="lib" id="lib"></div>
+  <div class="codewrap">
+    <div class="subhead" id="codeSubhead">SYMBOL NAMING · 符號命名規範</div>
+    <h3 id="codeTitle"></h3>
+    <p class="cdesc" id="codeDesc"></p>
+    <table class="codetable"><thead><tr id="codeHead"></tr></thead><tbody id="codeBody"></tbody></table>
+  </div>
+</div></section>
+
+<section id="naming"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">08</div><h2 data-zh="AI 可解析的命名規範" data-en='Machine-readable <span class="en">Naming</span>'></h2></div>
+  <p class="sec-sub" id="nameSub"></p>
+  <div class="filename" id="fname">
+    <span class="seg" data-c="var(--noncu)">TSMC<span class="tag" data-zh="客戶" data-en="Customer"></span></span><span class="sep">-</span>
+    <span class="seg" data-c="var(--cu)">BEOL_Cu<span class="tag" data-zh="清洗線" data-en="Clean line"></span></span><span class="sep">-</span>
+    <span class="seg" data-c="var(--co)">QCP<span class="tag" data-zh="文件類型" data-en="Doc type"></span></span><span class="sep">-</span>
+    <span class="seg" data-c="var(--metal)">20260702<span class="tag" data-zh="日期" data-en="Date"></span></span><span class="sep">-</span>
+    <span class="seg" data-c="var(--dif)">v1<span class="tag" data-zh="版本" data-en="Version"></span></span>
+  </div>
+  <div class="namekey" id="namekey"></div>
+  <div class="hintbar"><span class="mono">→</span><div id="nameHint"></div></div>
+</div></section>
+
+<section id="deck"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">09</div><h2 data-zh="簡報字級與用色" data-en='<span class="en">Presentation</span> spec'></h2></div>
+  <p class="sec-sub" id="deckSub"></p>
+  <div class="pgrid">
+    <div class="panel">
+      <h3>TYPE SCALE</h3>
+      <div class="scale">
+        <div class="row"><div class="meta">Display · 40 / 900</div><div style="font-size:32px;font-weight:900;line-height:1" data-zh="材質族識別" data-en="Material family"></div></div>
+        <div class="row"><div class="meta">H1 · 26 / 700</div><div style="font-size:23px;font-weight:700" data-zh="清洗線分類標準" data-en="Clean line taxonomy"></div></div>
+        <div class="row"><div class="meta">H2 · 18 / 500</div><div style="font-size:18px;font-weight:500" data-zh="包裝與台車識別" data-en="Packaging & cart ID"></div></div>
+        <div class="row"><div class="meta">Body · 15 / 300</div><div style="font-size:15px;font-weight:300;color:var(--mut)" data-zh="一套色彩語言貫穿全廠載體。" data-en="One colour language across every carrier."></div></div>
+        <div class="row"><div class="meta">Mono · 13</div><div class="mono" style="font-size:13px;color:var(--mut)">BEOL_Cu · #E3B341</div></div>
+      </div>
+      <h3 style="margin-top:28px" data-zh="低飽和色票 · 文件用" data-en="Low-saturation tokens · documents"></h3>
+      <div class="tokrow">
+        <div class="t" style="background:#DCDEE0"><span style="color:#333">灰</span></div>
+        <div class="t" style="background:#E8CE86"><span style="color:#333">黃</span></div>
+        <div class="t" style="background:#A9D3B4"><span style="color:#333">綠</span></div>
+        <div class="t" style="background:#A9C4E0"><span style="color:#333">藍</span></div>
+        <div class="t" style="background:#CBC2D4"><span style="color:#333">紫灰</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>SLIDE MASTER</h3>
+      <div class="slide">
+        <div class="stripe" style="background:#C99700"></div>
+        <div class="kicker">Cu · BEOL_Cu</div>
+        <h4 data-zh="清洗線分類識別" data-en="Clean line identity"></h4>
+        <div class="sl-sub" data-zh="材質族 → 顏色 → 符號　三重冗餘" data-en="Family → colour → symbol · triple redundancy"></div>
+        <div class="chips">
+          <span style="background:#b3891f" data-zh="色相" data-en="Hue"></span>
+          <span style="background:#7a8290" data-zh="形狀 △" data-en="Shape △"></span>
+          <span style="background:#5a6675">BEOL_Cu</span>
+        </div>
+        <div class="foot"><span>KTT PRO CLEAN TECH</span><span>Q-3-21 / v1</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section id="status"><div class="wrap">
+  <div class="rule" style="margin-bottom:clamp(56px,7vw,88px)"></div>
+  <div class="sechead"><div class="sec-ix">10</div><h2 data-zh="狀態色與分類色分家" data-en='<span class="en">Status</span> vs classification'></h2></div>
+  <p class="sec-sub" id="statSub"></p>
+  <div class="statusstrip" id="statusStrip"></div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fbrand">KTT PRO CLEAN TECH</div>
+  <div style="margin-top:6px" data-zh="科治新技股份有限公司 · 企業識別系統 v1" data-en="KTT Pro Clean Tech Co., Ltd. · Identity System v1"></div>
+  <div style="margin-top:8px" data-zh="色彩錨定材質族　·　符號＝色相＋形狀＋代碼三重冗餘" data-en="Colour anchored to material family · symbol = hue + shape + code"></div>
+  <div style="margin-top:8px;font-size:11px" class="mono" data-zh="數位 HEX 為近似值，實體施作須以同業公會色卡取樣校正" data-en="Digital HEX are approximations; physical work must be calibrated to trade-association colour chips"></div>
+</div></footer>
+
+<script>
+/* ================= i18n data ================= */
+const L={
+ nav:{zh:['原則','色彩','清洗線','包裝','台車','符號','命名','簡報','狀態'],
+      en:['Principles','Colour','Clean-line','Packaging','Carts','Symbols','Naming','Deck','Status']},
+ navIds:['principles','color','bands','bags','carts','symbols','naming','deck','status'],
+ heroH1:{zh:'精密，<br>可被看見。',en:'Precision,<br><span class="en">made visible.</span>'},
+ heroLede:{zh:'半導體與光電精密零件洗淨、表面處理、再生與高階量測。一套色彩語言，錨定於工件材質族；狀態由符號獨立承載，兩者永不混淆。',
+   en:'Precision cleaning, surface treatment, regeneration and metrology for semiconductor & optoelectronic parts. One colour language, anchored to the part\u2019s material family — while status is carried independently by symbols, never conflated.'},
+ colorSub:{zh:'地板同業公會色為不可動錨點，袋、車、標示、看板、簡報、文件全部對齊。同色相分「高飽和·現場」與「低飽和·文件」兩檔。',
+   en:'The trade-association floor colours are the fixed anchor; bags, carts, signage, boards, decks and documents all align to them. Each hue has two tiers — high-saturation for the shop floor, low-saturation for documents.'},
+ satHi:{zh:'高飽和 · 現場',en:'High · shop floor'},
+ satLo:{zh:'低飽和 · 文件',en:'Low · documents'},
+ symSub:{zh:'每個符號都不是隨機圖案，而是從工件世界的真實物件推導出的象徵。以 24 網格為底、幾何基元組合，線稿統一、可雷雕、縮至 15mm 仍清晰。點選觀看建構過程。',
+   en:'No icon is an arbitrary shape — each is derived from a real object in the part\u2019s world. Built on a 24-unit grid from geometric primitives; uniform strokes, laser-engravable, legible down to 15 mm. Select one to watch it built.'},
+ iconSub:{zh:'涵蓋製程場域、職能單位、材質族與狀態的完整符號系統。滑過任一符號可見設計網格；點選跳至建構解析。',
+   en:'A complete symbol system spanning process areas, functional units, material families and status. Hover to reveal the design grid; click to jump to its construction.'},
+ nameSub:{zh:'連字號分欄、底線保留於代碼內。機器 split(\u2019-\u2019) 即自動歸類進 RAG，人也一眼讀懂。與既有 ISO 編號並存不取代。',
+   en:'Hyphens delimit fields; underscores stay inside codes. Machines split on \u2019-\u2019 to auto-file into RAG; people read it at a glance. Coexists with existing ISO numbers rather than replacing them.'},
+ nameHint:{zh:'清洗線代碼內的底線（如 BEOL_Cu）保留不切；分欄一律用連字號。<span class="mono">"TSMC-BEOL_Cu-QCP-20260702-v1".split("-")</span> 直接得到五個欄位。',
+   en:'The underscore inside a clean-line code (e.g. BEOL_Cu) is preserved; only hyphens delimit fields. <span class="mono">"TSMC-BEOL_Cu-QCP-20260702-v1".split("-")</span> yields the five fields directly.'},
+ deckSub:{zh:'主結構維持黑白灰階，材質族色採低飽和版僅作重點標記。字型：微軟正黑體。',
+   en:'Core structure stays black-white-grey; family colours appear only as low-saturation accents. Typeface: Microsoft JhengHei.'},
+ statSub:{zh:'分類色（灰黃綠藍紫灰）承載材質；狀態走獨立暖色警示域，以符號＋邊條為主，不做整片填色。待判定禁用黃（黃已鎖給 Cu）。',
+   en:'Classification colours (grey, gold, green, blue, purple-grey) carry material; status uses a separate warm-alert domain of symbols plus edge bars — never full fills. Pending must not use yellow (reserved for Cu).'},
+ nkLabels:{zh:['客戶','清洗線','文件類型','日期','版本'],en:['Customer','Clean line','Doc type','Date','Version']},
+ nkVals:{zh:['<b>TSMC</b> UMC MICRON VIS PSMC','沿用既有 <b>Clean Line</b> 全大寫代碼','<b>QCP</b> COA CMQR ANOM MEAS SOP','<b>YYYYMMDD</b>','<b>vN</b>'],
+   en:['<b>TSMC</b> UMC MICRON VIS PSMC','existing <b>Clean Line</b> upper-case codes','<b>QCP</b> COA CMQR ANOM MEAS SOP','<b>YYYYMMDD</b>','<b>vN</b>']},
+ stageBtns:{zh:['網格','輔助幾何','描繪','重播'],en:['Grid','Guides','Draw','Replay']},
+ bandsSub:{zh:'五材質族色以全幅色帶展開；色彩＝材質族的紀律不變。滾動時依序點亮。',en:'The five family colours unfold as full-width bands — colour still means only material family. They light up in sequence on scroll.'},
+ bagsSub:{zh:'五袋色對應清洗線，紅袋保留給異常/退貨。半導體件若客戶要求透明，顏色改由束帶或標籤承載。',en:'Five bag colours map to clean lines; red is reserved for anomaly/return. Where customers require clear bags, colour moves to a strap or label.'},
+ bagNote:{zh:'污染注意：有色 PE 袋染料在 class100/1000 可能產生微粒或逸氣，且客戶可能有包裝規範。若客戶要求透明袋，顏色改由束帶或標籤承載。',en:'Contamination note: pigmented PE bags may shed particles or outgas in class 100/1000, and customers may mandate packaging. Where customers require clear bags, colour moves to a strap or label.'},
+ cartsSub:{zh:'台車 ＝ 靜態分類 × 動態狀態。車身色＝材質族（磁牌/束帶可換）；狀態卡可插拔。試著切換下方選項。',en:'A cart = static classification × dynamic status. Body colour = material family (swappable); the status card is pluggable. Try the controls below.'},
+ cartFamLab:{zh:'車身色 · 材質族',en:'Body colour · family'},
+ cartStatLab:{zh:'狀態卡 · 可插拔',en:'Status card · pluggable'},
+ cartSizeLab:{zh:'層數 · 二/三層',en:'Tiers · 2 / 3'},
+ cartNote:{zh:'分類（車身色）不變，狀態（卡）隨流程變動——兩者正交，彼此不干擾。',en:'Classification (body) is fixed; status (card) changes through the flow — orthogonal and non-interfering.'},
+ codeTitle:{zh:'符號命名規範',en:'Symbol naming standard'},
+ codeDesc:{zh:'每個符號皆有唯一代碼，格式「群組-序號-中文-英文」，用字固定、禁止同義詞混用；與檔案命名同構（皆以 - 分欄），可被 AI 解析。',en:'Every symbol has a unique code — GROUP-NN-Chinese-English. Wording is fixed, synonyms forbidden; it mirrors the file-naming spec (hyphen-delimited) and is machine-parseable.'},
+ codeHead:{zh:['代碼','符號','中文','英文','群組'],en:['Code','Symbol','Chinese','English','Group']}
+};
+
+const PRIN=[
+ {no:'P.01',zh:['顏色只編碼材質族','一個維度，一種顏色。尺寸、客戶、Fab 交給文字與 QR，顏色永不超載。'],
+   en:['Colour encodes one thing','One dimension, one colour. Size, customer and fab go to text and QR — colour never overloads.'],
+   glyph:'circle'},
+ {no:'P.02',zh:['分類與狀態正交','分類（靜態）用中性與冷色；狀態（動態）用暖色警示＋符號。紅橙洋紅保留給狀態。'],
+   en:['Classification ⊥ status','Classification (static) uses neutral & cool hues; status (dynamic) uses warm alerts plus symbols. Red, orange and magenta are reserved for status.'],
+   glyph:'cross'},
+ {no:'P.03',zh:['三重冗餘','色相＋形狀＋代碼同時存在，色弱者亦可辨識。符號皆可雷雕、縮至 15mm 仍清晰。'],
+   en:['Triple redundancy','Hue + shape + code coexist so colour-deficient viewers can still read it. Every symbol is laser-engravable and legible at 15 mm.'],
+   glyph:'layers'}
+];
+const PRIN_GLYPH={
+ circle:'<circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/>',
+ cross:'<line x1="12" y1="3" x2="12" y2="21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+ layers:'<path d="M12 3 L21 8 L12 13 L3 8 Z M3 12 L12 17 L21 12 M3 16 L12 21 L21 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>'
+};
+
+const FAM=[
+ {key:'noncu',name:'Non Cu',zh:'珍珠灰族',en:'Pearl-grey family',hi:'#C3C9D1',lo:'#DCDEE0',ui:'#96A0AB',gk:'#37',
+   bag:{zh:'透明袋',en:'Clear bag'},shape:'circle',lines:['FEOL','Non_Cu_PVD','Non_Cu_CVD']},
+ {key:'cu',name:'Cu',zh:'藏金黃族',en:'Deep-gold family',hi:'#E3B341',lo:'#E8CE86',ui:'#BC8A16',gk:'#85',
+   bag:{zh:'黃袋',en:'Yellow bag'},shape:'triangle',lines:['BEOL_Cu','Cu_CVD','Cu_PVD']},
+ {key:'co',name:'Co',zh:'椰子綠族',en:'Coconut-green family',hi:'#4FB477',lo:'#A9D3B4',ui:'#2E9E5B',gk:'#90',
+   bag:{zh:'綠袋',en:'Green bag'},shape:'square',lines:['Co','Co_PVD','BEOL_Oxide*']},
+ {key:'metal',name:'Metal',zh:'浪漫藍族',en:'Romantic-blue family',hi:'#4F93E0',lo:'#A9C4E0',ui:'#2E72C4',gk:'#98',
+   bag:{zh:'藍袋',en:'Blue bag'},shape:'diamond',lines:['BEOL','BEOL_Metal']},
+ {key:'dif',name:'DIF',zh:'紫灰族 · 擴散',en:'Purple-grey · diffusion',hi:'#9B8CC0',lo:'#CBC2D4',ui:'#7A68A6',gk:'+',
+   bag:{zh:'透明+束帶',en:'Clear + strap'},shape:'hexagon',lines:['DIF']},
+];
+
+const S='stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+const P=(d,i=0)=>`<path class="dw" pathLength="1" style="transition-delay:${i*.12}s" ${S} d="${d}"/>`;
+const Ln=(a,b,c,d,i=0)=>`<line class="dw" pathLength="1" style="transition-delay:${i*.12}s" ${S} x1="${a}" y1="${b}" x2="${c}" y2="${d}"/>`;
+const Ci=(x,y,r,i=0)=>`<circle class="dw" pathLength="1" style="transition-delay:${i*.12}s" ${S} cx="${x}" cy="${y}" r="${r}"/>`;
+const D=(x,y,r=.9,i=0)=>`<circle class="fdw" style="transition-delay:${.3+i*.08}s" fill="currentColor" cx="${x}" cy="${y}" r="${r}"/>`;
+
+const ICONS={
+ noncu:{g:'mat',zh:'Non Cu 族',en:'NON-CU',role:{zh:'材質族 · 無銅',en:'Family · no copper'},
+   why:{zh:'無銅製程的中性色底。以最基本的「圓」承載——圓是幾何原點，象徵未附加金屬特性的基準材質。',en:'The neutral base for copper-free processes. The circle is the geometric origin — a baseline material with no metal character added.'},
+   steps:{zh:[['圓心定位','以中心 (12,12) 為圓心。'],['正圓描繪','半徑 7 的正圓，開口最少、辨識最快。'],['中心點','加點強化「原點」語意。']],
+     en:[['Centre','Origin at (12,12).'],['Circle','Radius-7 true circle — fastest to read.'],['Dot','Centre dot reinforces \u201corigin\u201d.']]},
+   svg:Ci(12,12,7,0)+D(12,12,1,0)},
+ cu:{g:'mat',zh:'Cu 族',en:'CU',role:{zh:'材質族 · 銅',en:'Family · copper'},
+   why:{zh:'銅製程。以「三角」向上收斂，象徵沉積堆疊；三邊對應 Cu 於 BEOL 的多層走線結構。',en:'Copper. An upward triangle for deposition/stacking; three sides echo the multilayer Cu wiring of BEOL.'},
+   steps:{zh:[['三頂點','取等邊三頂點。'],['連邊','三邊依序連成正三角。'],['內層線','中央短橫線暗示多層走線。']],
+     en:[['Vertices','Equilateral vertices.'],['Edges','Close into a triangle.'],['Inner line','Short bar hints at multilayer wiring.']]},
+   svg:P('M12 5 L19 18 L5 18 Z',0)+Ln(9,14,15,14,1)},
+ co:{g:'mat',zh:'Co 族',en:'CO',role:{zh:'材質族 · 鈷',en:'Family · cobalt'},
+   why:{zh:'鈷製程。以「正方」象徵穩定緻密的鈷阻障/襯墊層；四邊等長代表結構均質。',en:'Cobalt. A square for the dense, stable Co barrier/liner; equal sides for homogeneous structure.'},
+   steps:{zh:[['方框','置中正方，邊長 12。'],['描邊','四邊閉合。'],['對角','細對角線暗示緻密晶格。']],
+     en:[['Frame','Centred square, side 12.'],['Edges','Close four sides.'],['Diagonal','Hints at a dense lattice.']]},
+   svg:P('M6 6 H18 V18 H6 Z',0)+Ln(9,9,15,15,1)},
+ metal:{g:'mat',zh:'Metal 族',en:'METAL',role:{zh:'材質族 · 金屬',en:'Family · metal'},
+   why:{zh:'金屬層。以「菱形」——旋 45° 的方——象徵金屬反光晶面；與 Co 的正方成對比，色弱者靠傾角即可區分。',en:'Metal layers. A diamond (a square at 45°) for reflective metal facets; the tilt alone separates it from Co\u2019s square for colour-deficient viewers.'},
+   steps:{zh:[['旋轉方','正方旋 45°。'],['描邊','四頂點連線閉合。'],['反光線','中央斜線象徵金屬反光。']],
+     en:[['Rotate','Square at 45°.'],['Edges','Close four vertices.'],['Glint','Diagonal for metallic reflection.']]},
+   svg:P('M12 5 L19 12 L12 19 L5 12 Z',0)+Ln(9.5,9.5,14.5,14.5,1)},
+ dif:{g:'mat',zh:'DIF 擴散族',en:'DIFFUSION',role:{zh:'材質族 · 擴散',en:'Family · diffusion'},
+   why:{zh:'擴散製程。以「六角」象徵爐管高溫下的晶格與熱擴散對稱性；六邊為五族中邊數最多，一眼即與其他四族分離。',en:'Diffusion. A hexagon for the high-temperature lattice and symmetry of thermal diffusion; the most sides of any family, instantly distinct.'},
+   steps:{zh:[['六頂點','正六邊形。'],['描邊','連成六角。'],['中心擴散','中心向外短線＝擴散。']],
+     en:[['Vertices','Regular hexagon.'],['Edges','Close six sides.'],['Spread','Lines from centre = diffusion.']]},
+   svg:P('M12 4 L18.9 8 L18.9 16 L12 20 L5.1 16 L5.1 8 Z',0)+Ln(12,12,12,9,1)+Ln(12,12,14.6,13.5,1)+Ln(12,12,9.4,13.5,1)},
+
+ chem:{g:'proc',zh:'化學洗淨',en:'CHEM CLEAN',role:{zh:'製程 · 化洗',en:'Process · chemical'},
+   why:{zh:'化學浸泡洗淨。以「燒杯＋液面＋上升氣泡」構成——燒杯是化學通用符號，液面下氣泡代表化學反應與浸泡作用。',en:'Chemical immersion. A beaker with a liquid line and rising bubbles — the universal chemistry mark, bubbles showing the reaction.'},
+   steps:{zh:[['杯體','上寬下窄的燒杯。'],['液面','杯內水平液面。'],['氣泡','三顆漸升氣泡＝反應。']],
+     en:[['Beaker','Tapered beaker outline.'],['Liquid','Horizontal surface line.'],['Bubbles','Three rising bubbles = reaction.']]},
+   svg:P('M8 4 H16 M9 4 V13 A3 3 0 0 0 15 13 V4',0)+Ln(9.4,10,14.6,10,1)+D(11,8,.8,0)+D(13,7.5,.7,1)+D(12,6.2,.6,2)},
+ blast:{g:'proc',zh:'物理噴砂',en:'SANDBLAST',role:{zh:'製程 · 噴砂',en:'Process · blast'},
+   why:{zh:'噴砂表面處理。以「噴嘴＋擴散顆粒＋受擊表面線」構成——錐狀顆粒直接打在下方表面，動態方向感即是噴砂本質。',en:'Abrasive blasting. A nozzle throws a cone of particles onto the surface below — the directional force is the essence of blasting.'},
+   steps:{zh:[['噴嘴','左上斜置噴嘴。'],['顆粒錐','顆粒錐狀擴散噴出。'],['表面線','底部橫線＝工件表面。']],
+     en:[['Nozzle','Angled nozzle, top-left.'],['Cone','Particles fan out.'],['Surface','Baseline = part surface.']]},
+   svg:P('M5 6 L9 9',0)+Ln(4,18,20,18,0)+D(11,10.5,.7,0)+D(13,12,.7,1)+D(15,13.6,.7,2)+D(12.5,10,.6,1)+D(14.5,11.6,.6,2)+D(16.5,13,.6,3)},
+ water:{g:'proc',zh:'純水室',en:'PURE WATER',role:{zh:'製程 · 超純水',en:'Process · ultra-pure water'},
+   why:{zh:'超純水＋超音波洗淨。以「水滴＋同心波紋」構成——水滴是水的原型，其下同心波紋象徵超音波震盪的能量傳遞。',en:'Ultra-pure water with ultrasonics. A droplet over concentric ripples — the ripples are the ultrasonic energy.'},
+   steps:{zh:[['水滴','標準淚滴。'],['波紋','兩道同心弧＝超音波。'],['對稱','左右對稱＝純度。']],
+     en:[['Drop','Standard teardrop.'],['Ripples','Two arcs = ultrasonics.'],['Symmetry','Mirror = purity.']]},
+   svg:P('M12 4 C12 4 7 10 7 13.5 A5 5 0 0 0 17 13.5 C17 10 12 4 12 4 Z',0)+P('M8 19 Q12 17 16 19',1)+P('M9.5 21 Q12 19.6 14.5 21',2)},
+ furnace:{g:'proc',zh:'爐管 / 烘烤',en:'FURNACE',role:{zh:'製程 · 爐管烘烤',en:'Process · furnace / bake'},
+   why:{zh:'爐管與烘乾。以「橫向爐管＋上升熱波」構成——橫置圓筒是擴散爐/烤箱的實體形態，上方波線代表高溫熱氣。',en:'Tube furnace and bake. A horizontal cylinder for the diffusion furnace / oven, with heat waves rising above.'},
+   steps:{zh:[['爐管','橫置圓筒。'],['管口','左端橢圓＝置件口。'],['熱波','上方三道波線＝升溫。']],
+     en:[['Tube','Horizontal cylinder.'],['Mouth','Left ellipse = opening.'],['Heat','Three waves = rising temp.']]},
+   svg:P('M6 11 H18 V17 H6',0)+`<ellipse class="dw" pathLength="1" ${S} cx="6" cy="14" rx="2.4" ry="3"/>`+P('M9 8 Q10 6.5 11 8',1)+P('M12 8 Q13 6.5 14 8',2)+P('M15 8 Q16 6.5 17 8',2)},
+ clean:{g:'proc',zh:'無塵室',en:'CLEANROOM',role:{zh:'製程 · 潔淨',en:'Process · cleanroom'},
+   why:{zh:'無塵室層流潔淨。以「外框＋向下層流箭頭＋被阻擋的微粒」構成——垂直向下平行氣流是 FFU 層流意象，被劃掉的微粒代表無塵。',en:'Laminar cleanroom. A frame with downward laminar arrows and a struck-out particle — vertical flow is the FFU signature; the crossed particle means \u201cno contamination\u201d.'},
+   steps:{zh:[['潔淨框','圓角外框＝受控空間。'],['層流','三道向下箭頭。'],['除粒','微粒加斜線＝無微粒。']],
+     en:[['Frame','Controlled space.'],['Laminar','Three down arrows.'],['No-particle','Particle + slash.']]},
+   svg:P('M5 4 H19 V20 H5 Z',0)+Ln(9,7,9,13,1)+P('M7.6 11.4 L9 13 L10.4 11.4',1)+Ln(12,7,12,13,1)+P('M10.6 11.4 L12 13 L13.4 11.4',1)+Ln(15,7,15,13,1)+P('M13.6 11.4 L15 13 L16.4 11.4',1)+Ci(12,17,1.6,2)+Ln(10.9,15.9,13.1,18.1,2)},
+ measure:{g:'proc',zh:'量測室',en:'METROLOGY',role:{zh:'製程 · 精密量測',en:'Process · metrology'},
+   why:{zh:'高階量測（膜厚/粗度/平坦度）。以「十字準星＋刻度」構成——準星是精密定位符號，四向刻度代表座標量測。',en:'High-end metrology (film thickness / roughness / flatness). A reticle for precise positioning; four ticks for coordinate measurement.'},
+   steps:{zh:[['準星','正十字對準。'],['量測環','中央小圓＝聚焦量點。'],['刻度','四端刻度＝座標尺規。']],
+     en:[['Reticle','Centred crosshair.'],['Ring','Focus point at centre.'],['Ticks','Coordinate scale.']]},
+   svg:Ci(12,12,3.4,0)+Ln(12,3,12,7,1)+Ln(12,17,12,21,1)+Ln(3,12,7,12,1)+Ln(17,12,21,12,1)+D(12,12,.9,1)},
+ coat:{g:'proc',zh:'表面處理',en:'COATING',role:{zh:'製程 · 熔射/鍍膜',en:'Process · thermal spray / coating'},
+   why:{zh:'熔射噴塗與鍍膜再生。以「噴塗源＋堆疊鍍層」構成——上方噴出、下方逐層堆積，象徵在工件表面重建塗層以延壽。',en:'Thermal spray and coating regeneration. A source sprays from above onto stacking layers below — rebuilding the surface to extend part life.'},
+   steps:{zh:[['噴源','上方噴嘴向下。'],['粒流','錐狀粒流落向表面。'],['鍍層','底部疊線＝新生塗層。']],
+     en:[['Source','Nozzle sprays down.'],['Flux','Particle cone.'],['Layers','Stacked lines = new coating.']]},
+   svg:P('M12 4 L10 7 M12 4 L14 7',0)+D(11,9,.7,0)+D(13,9.5,.7,1)+D(12,11,.6,1)+D(14,11.4,.6,2)+Ln(6,15,18,15,2)+Ln(6,18,18,18,3)},
+ logistics:{g:'proc',zh:'收送貨',en:'LOGISTICS',role:{zh:'物流 · 收送貨',en:'Logistics · transport'},
+   why:{zh:'收送貨物流。以「貨車」構成——側視貨車是運輸最直接符號，車廂＋車頭代表工件在客戶與廠區間流轉。',en:'Pickup & delivery. A side-view truck — the most direct transport mark for parts flowing between customer and plant.'},
+   steps:{zh:[['車廂','左側方形車廂。'],['車頭','右側斜面車頭。'],['車輪','兩輪著地。']],en:[['Body','Cargo box.'],['Cab','Angled cab.'],['Wheels','Two wheels.']]},
+   svg:P('M3 7 H14 V16 H3 Z',0)+P('M14 10 H18 L20 13 V16 H14 Z',1)+Ci(7,17,1.6,2)+Ci(17,17,1.6,2)},
+ storage:{g:'proc',zh:'倉儲',en:'STORAGE',role:{zh:'物流 · 倉儲',en:'Logistics · storage'},
+   why:{zh:'倉儲。以「堆疊箱＋層架」構成——原箱原回是本廠關鍵，堆疊箱體與底部層架代表定位存放。',en:'Warehousing. Stacked boxes on a shelf — \u201coriginal box back\u201d is critical here, so location storage is the theme.'},
+   steps:{zh:[['底架','底層層架。'],['箱體','上方堆疊兩箱。'],['封條','箱面十字封條。']],en:[['Shelf','Base shelf.'],['Boxes','Two stacked.'],['Seal','Cross seal.']]},
+   svg:P('M5 6 H12 V12 H5 Z',0)+P('M12 6 H19 V12 H12 Z',1)+P('M8 12 H16 V18 H8 Z',2)+Ln(8.5,7,8.5,11,1)+Ln(12,15,16,15,3)},
+ shipping:{g:'proc',zh:'出貨',en:'SHIPPING',role:{zh:'物流 · 出貨',en:'Logistics · shipping'},
+   why:{zh:'出貨放行。以「箱＋外向箭」構成——箱體代表已包裝工件，向外箭頭代表離廠出貨，與收貨方向相反。',en:'Outbound release. A box with an outward arrow — packaged parts leaving the plant, opposite to receiving.'},
+   steps:{zh:[['貨箱','置中封裝箱。'],['封條','頂面封條。'],['外向箭','右向箭＝出貨。']],en:[['Box','Sealed box.'],['Seal','Top seal.'],['Arrow','Outbound.']]},
+   svg:P('M4 8 H13 V18 H4 Z',0)+Ln(4,11,13,11,1)+Ln(8.5,8,8.5,11,1)+Ln(15,13,21,13,2)+P('M18 10 L21 13 L18 16',2)},
+
+ office:{g:'func',zh:'辦公室',en:'OFFICE',role:{zh:'職能 · 內勤',en:'Function · office'},
+   why:{zh:'辦公內勤。以「螢幕＋文件」構成——顯示器是現代辦公核心載具，底部文件線代表文書作業。',en:'Back-office. A monitor — the core device of modern office work — with document lines.'},
+   steps:{zh:[['螢幕','圓角矩形螢幕。'],['底座','下方支撐座。'],['文件','螢幕內橫線＝文書。']],en:[['Screen','Rounded monitor.'],['Stand','Base.'],['Docs','Lines = paperwork.']]},
+   svg:P('M5 5 H19 V15 H5 Z',0)+Ln(10,18,14,18,1)+Ln(12,15,12,18,1)+Ln(8,9,16,9,1)+Ln(8,12,13,12,2)},
+ sales:{g:'func',zh:'業務',en:'SALES',role:{zh:'職能 · 業務',en:'Function · sales'},
+   why:{zh:'業務關係。以「握手」構成——雙手交握是商業合作與成交的普世象徵，直指業務維繫客戶的核心。',en:'Business relationships. A handshake — the universal sign of partnership and closing, the core of sales.'},
+   steps:{zh:[['左手','自左伸入。'],['右手','自右伸入。'],['交握','中央交疊＝合作。']],en:[['Left','From left.'],['Right','From right.'],['Grip','Overlap = deal.']]},
+   svg:P('M4 12 L9 12 L12 14 L10 16 L7 14',0)+P('M20 10 L14 10 L11 12',1)+P('M12 14 L15 12 L18 13',1)+Ln(4,10,7,10,0)+Ln(17,15,20,15,2)},
+ planning:{g:'func',zh:'生管',en:'PLANNING',role:{zh:'職能 · 生產管理',en:'Function · production control'},
+   why:{zh:'生產排程管理。以「甘特條」構成——長短不一的橫條依時間排列，是排程與產能調度最直接的視覺語言。',en:'Production scheduling. Gantt bars of varying length along a timeline — the most direct language for scheduling and capacity.'},
+   steps:{zh:[['時間軸','左側縱軸。'],['排程條','三段錯位橫條。'],['節點','條首圓點。']],en:[['Axis','Left axis.'],['Bars','Three staggered bars.'],['Nodes','Start dots.']]},
+   svg:Ln(5,5,5,19,0)+Ln(5,19,19,19,0)+Ln(8,8,15,8,1)+Ln(8,12,18,12,2)+Ln(8,16,13,16,2)+D(8,8,.9,1)+D(8,12,.9,2)+D(8,16,.9,3)},
+ qc:{g:'func',zh:'品保',en:'QUALITY',role:{zh:'職能 · 品質保證',en:'Function · quality'},
+   why:{zh:'品質保證。以「盾＋勾」構成——盾牌代表防護與把關，內部勾號代表通過檢驗，合起來即品質守門。',en:'Quality assurance. A shield for protection and gatekeeping, with a check for passing inspection.'},
+   steps:{zh:[['盾形','上平下尖盾牌。'],['入盾','勾號置中。'],['確認','勾＝合格。']],en:[['Shield','Shield outline.'],['Mark','Centred check.'],['Pass','Check = passed.']]},
+   svg:P('M12 4 L19 7 V12 C19 16 16 19 12 20 C8 19 5 16 5 12 V7 Z',0)+P('M9 12 L11 14 L15 10',1)},
+ rnd:{g:'func',zh:'研發',en:'R&D',role:{zh:'職能 · 研發',en:'Function · R&D'},
+   why:{zh:'研發試驗。以「圓底燒瓶＋火花」構成——實驗燒瓶是研發原型符號，瓶口火花代表創新與突破。',en:'Research. A round-bottom flask — the archetype of the lab — with a spark for innovation.'},
+   steps:{zh:[['瓶頸','窄長瓶頸。'],['瓶身','圓底瓶身。'],['火花','瓶口星芒。']],en:[['Neck','Narrow neck.'],['Body','Round body.'],['Spark','Star at mouth.']]},
+   svg:P('M10 4 H14 M11 4 V9 L7 17 A2 2 0 0 0 9 19 H15 A2 2 0 0 0 17 17 L13 9 V4',0)+Ln(9.5,14,14.5,14,1)+P('M12 5.5 L12 2 M10.5 3 L13.5 3',2)},
+ mis:{g:'func',zh:'系統管理',en:'MIS / IT',role:{zh:'職能 · 資訊系統',en:'Function · IT systems'},
+   why:{zh:'資訊系統管理。以「伺服器機櫃＋齒輪」構成——堆疊機櫃是 IT 基礎設施，齒輪代表系統維運與整合。',en:'IT systems. Stacked server racks for infrastructure, a gear for operations and integration.'},
+   steps:{zh:[['機櫃','兩層機箱。'],['狀態燈','左側指示點。'],['齒輪','右下齒輪＝維運。']],en:[['Racks','Two units.'],['LEDs','Status dots.'],['Gear','Ops & integration.']]},
+   svg:P('M5 5 H15 V9 H5 Z',0)+P('M5 11 H15 V15 H5 Z',1)+D(7,7,.8,1)+D(7,13,.8,2)+Ci(17,17,2.4,2)+Ln(17,13.8,17,15.2,3)+Ln(17,18.8,17,20.2,3)+Ln(13.8,17,15.2,17,3)+Ln(18.8,17,20.2,17,3)},
+ hr:{g:'func',zh:'人資',en:'HR',role:{zh:'職能 · 人力資源',en:'Function · human resources'},
+   why:{zh:'人力資源。以「人＋支撐弧」構成——人形代表員工，環抱的弧線代表招募、培育與照顧，是以人為本的象徵。',en:'HR. A figure for the employee, surrounded by an arc for recruiting, developing and supporting — people-first.'},
+   steps:{zh:[['人形','頭與肩。'],['支撐弧','外圍半環＝組織支持。'],['對稱','置中＝公平。']],en:[['Figure','Head & shoulders.'],['Arc','Organisational support.'],['Symmetry','Fairness.']]},
+   svg:Ci(12,8,3,0)+P('M6.5 19 A6 6 0 0 1 17.5 19',1)+P('M4 14 A9 9 0 0 1 8 10',2)+P('M20 14 A9 9 0 0 0 16 10',2)},
+ doc:{g:'func',zh:'文件管理',en:'DOCS',role:{zh:'職能 · 文件',en:'Function · documents'},
+   why:{zh:'文件管理。以「折角文件＋索引線」構成——折角是文件通用符號，內部橫線代表結構化欄位，呼應可解析命名。',en:'Document control. A dog-eared page — the universal doc mark — with lines for structured fields, echoing the naming spec.'},
+   steps:{zh:[['紙形','右上折角紙張。'],['折角','折角三角。'],['索引','橫線＝欄位。']],en:[['Sheet','Dog-eared page.'],['Fold','Corner triangle.'],['Index','Lines = fields.']]},
+   svg:P('M7 4 H14 L18 8 V20 H7 Z',0)+P('M14 4 V8 H18',1)+Ln(9.5,12,15,12,2)+Ln(9.5,15,15,15,2)+Ln(9.5,18,13,18,3)},
+ strategy:{g:'func',zh:'企業策略',en:'STRATEGY',role:{zh:'職能 · 策略',en:'Function · strategy'},
+   why:{zh:'企業策略。以「同心靶＋指向箭」構成——同心圓是目標，貫穿的箭代表方向與命中，象徵策略的目標導向。',en:'Corporate strategy. Concentric target rings for the goal, an arrow for direction and the hit — strategy is goal-directed.'},
+   steps:{zh:[['外環','目標環。'],['靶心','命中點。'],['指向箭','右上箭＝方向。']],en:[['Ring','Target ring.'],['Bullseye','Hit point.'],['Arrow','Direction.']]},
+   svg:Ci(12,12,7,0)+Ci(12,12,3.5,1)+D(12,12,1,2)+Ln(12,12,19,5,2)+P('M15.5 5 H19 V8.5',3)},
+};
+
+const STATUS=[
+ {key:'alert',zh:'異常 / 退貨',en:'ANOMALY',c:'var(--alert)',svg:P('M12 4 L21 19 H3 Z',0)+Ln(12,10,12,14,1)+D(12,17,1,2),
+   why:{zh:'警示三角＋驚嘆＝立即注意',en:'Warning triangle + bang = attend now'}},
+ {key:'rush',zh:'急件',en:'RUSH',c:'var(--rush)',svg:Ci(12,12,8,0)+Ln(12,12,12,7.5,1)+Ln(12,12,15.5,13.5,1)+D(12,12,.8,1),
+   why:{zh:'時鐘＝時間急迫',en:'Clock = time-critical'}},
+ {key:'hold',zh:'待判定 / 待確認',en:'PENDING',c:'var(--hold)',svg:Ci(12,12,8,0)+P('M9.5 9.5 A2.5 2.5 0 1 1 12 13 V14.5',1)+D(12,17.5,1,2),
+   why:{zh:'問號＝尚待判定（禁用黃）',en:'Question mark = undetermined (no yellow)'}},
+ {key:'towash',zh:'待洗',en:'TO WASH',c:'var(--mut)',svg:P('M12 5 C12 5 8 9.5 8 12.5 A4 4 0 0 0 16 12.5 C16 9.5 12 5 12 5 Z',0)+D(12,12,.8,1),
+   why:{zh:'水滴＝等待洗淨',en:'Drop = awaiting cleaning'}},
+ {key:'tocheck',zh:'待檢',en:'TO INSPECT',c:'var(--mut)',svg:Ci(11,11,5,0)+Ln(14.5,14.5,19,19,1)+D(11,11,.9,1),
+   why:{zh:'放大鏡＝等待檢驗',en:'Loupe = awaiting inspection'}},
+ {key:'release',zh:'正式放行',en:'RELEASED',c:'var(--co)',svg:Ci(12,12,8,0)+P('M8 12 L11 15 L16 9',1),
+   why:{zh:'圓中勾＝確認放行',en:'Check = released'}},
+];
+
+/* ================= state & i18n render ================= */
+let lang='zh', curSat='hi', curBuild='chem', stageMode='draw', curGroup='all';
+function tr(o){return o[lang]}
+function applyStatic(){
+  document.documentElement.lang = lang==='zh'?'zh-Hant':'en';
+  document.querySelectorAll('[data-zh]').forEach(el=>{
+    const v=el.getAttribute('data-'+lang); if(v!=null) el.innerHTML=v;
+  });
+}
+/* nav */
+(function(){const nl=document.getElementById('navlinks');
+  L.navIds.forEach((id,i)=>nl.insertAdjacentHTML('beforeend',`<a href="#${id}" data-zh="${L.nav.zh[i]}" data-en="${L.nav.en[i]}"></a>`));
+})();
+
+function renderI18nBlocks(){
+  document.getElementById('heroH1').innerHTML=tr(L.heroH1);
+  document.getElementById('heroLede').textContent=tr(L.heroLede);
+  document.getElementById('colorSub').textContent=tr(L.colorSub);
+  document.querySelector('#satTog [data-s="hi"]').textContent=tr(L.satHi);
+  document.querySelector('#satTog [data-s="lo"]').textContent=tr(L.satLo);
+  document.getElementById('symSub').textContent=tr(L.symSub);
+  document.getElementById('iconSub').textContent=tr(L.iconSub);
+  document.getElementById('nameSub').textContent=tr(L.nameSub);
+  document.getElementById('nameHint').innerHTML=tr(L.nameHint);
+  document.getElementById('deckSub').textContent=tr(L.deckSub);
+  document.getElementById('statSub').textContent=tr(L.statSub);
+  document.getElementById('bandsSub').textContent=tr(L.bandsSub);
+  document.getElementById('bagsSub').textContent=tr(L.bagsSub);
+  document.getElementById('cartsSub').textContent=tr(L.cartsSub);
+  // capability vocab
+  const cap=['物理洗淨 Physical','化學洗淨 Chemical','噴砂 Blast','熔射噴塗 Thermal Spray','ALD 鍍膜','雷射清潔 Laser','ESC 維修','高階量測 Metrology'];
+  document.getElementById('capvoc').innerHTML=cap.map((c,i)=>`<span>${c.replace(/^(\S+)/,'<b>$1</b>')}</span>`).join('<span class="sep">/</span>');
+  // stage buttons
+  const sb=document.getElementById('stagebar');sb.innerHTML=['grid','guide','draw','replay'].map((m,i)=>`<button data-mode="${m}" class="${m==='draw'?'on':''}">${tr(L.stageBtns)[i]}</button>`).join('');
+  sb.onclick=e=>{const b=e.target.closest('button');if(b)applyMode(b.dataset.mode);};
+  // naming key
+  const nk=document.getElementById('namekey');nk.innerHTML=tr(L.nkLabels).map((lab,i)=>
+    `<div class="k"><div class="lab">${lab}</div><div class="val">${tr(L.nkVals)[i]}</div></div>`).join('');
+}
+
+/* principles */
+function renderPrin(){
+  const el=document.getElementById('prin');el.innerHTML='';
+  PRIN.forEach(p=>{const t=tr(p);
+    el.insertAdjacentHTML('beforeend',
+     `<div class="p"><div class="no">${p.no}</div><h3>${t[0]}</h3><p>${t[1]}</p>
+      <div class="glyph"><svg viewBox="0 0 24 24">${PRIN_GLYPH[p.glyph]}</svg></div></div>`);
+  });
+}
+
+/* shape glyph for swatch */
+function shapeGlyph(shape,color,size=36){
+  const m={circle:`<circle cx="16" cy="16" r="9" fill="${color}"/>`,
+    triangle:`<path d="M16 6 L26 25 L6 25 Z" fill="${color}"/>`,
+    square:`<rect x="7" y="7" width="18" height="18" rx="1" fill="${color}"/>`,
+    diamond:`<path d="M16 6 L26 16 L16 26 L6 16 Z" fill="${color}"/>`,
+    hexagon:`<path d="M16 5 L25 10.5 L25 21.5 L16 27 L7 21.5 L7 10.5 Z" fill="${color}"/>`};
+  return `<svg width="${size}" height="${size}" viewBox="0 0 32 32">${m[shape]}</svg>`;
+}
+/* color families */
+let io2;
+function renderFam(){
+  const grid=document.getElementById('famGrid');grid.innerHTML='';
+  FAM.forEach((f,i)=>{
+    const col=curSat==='hi'?f.hi:f.lo;
+    const el=document.createElement('div');el.className='fam';el.style.transitionDelay=(i*.05)+'s';
+    el.innerHTML=`
+      <div class="swatch" style="background:${col}">${shapeGlyph(f.shape,'rgba(15,20,25,.82)',38)}</div>
+      <h3>${f.name}</h3><div class="cn">${tr({zh:f.zh,en:f.en})}</div>
+      <div class="meta"><span>${lang==='zh'?'同業公會':'Assoc.'} <b>${f.gk}</b></span><span>HEX <b>${col.toUpperCase()}</b></span><span>${lang==='zh'?'袋':'Bag'} <b>${tr(f.bag)}</b></span></div>
+      <div class="lines">${f.lines.map(l=>`<span>${l}</span>`).join('')}</div>`;
+    grid.appendChild(el);
+  });
+  if(io2)io2.disconnect();
+  io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.15});
+  grid.querySelectorAll('.fam').forEach(f=>io2.observe(f));
+}
+document.getElementById('satTog').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#satTog button').forEach(x=>x.classList.remove('on'));b.classList.add('on');curSat=b.dataset.s;renderFam();});
+
+/* build / philosophy */
+const buildKeys=['chem','blast','water','furnace','clean','measure','cu','dif'];
+function renderStageGrid(){const g=document.getElementById('stageGrid');let s='';
+  for(let i=0;i<=24;i+=3)s+=`<line x1="${i}" y1="0" x2="${i}" y2="24" stroke="var(--line)" stroke-width=".2"/><line x1="0" y1="${i}" x2="24" y2="${i}" stroke="var(--line)" stroke-width=".2"/>`;
+  g.innerHTML=s;}
+function buildGuides(key){
+  const map={measure:'<circle class="guide" cx="12" cy="12" r="3.4"/><circle class="guide" cx="12" cy="12" r="8.5"/>',
+    cu:'<path class="guide" d="M12 5 L19 18 L5 18 Z"/>',dif:'<path class="guide" d="M12 4 L18.9 8 L18.9 16 L12 20 L5.1 16 L5.1 8 Z"/>',
+    clean:'<rect class="guide" x="5" y="4" width="14" height="16"/>',furnace:'<ellipse class="guide" cx="6" cy="14" rx="2.4" ry="3"/>',
+    blast:'<line class="guide" x1="4" y1="18" x2="20" y2="18"/>',water:'<circle class="guide" cx="12" cy="13.5" r="5"/>',
+    chem:'<circle class="guide" cx="12" cy="13" r="3"/>'};
+  return map[key]||'<circle class="guide" cx="12" cy="12" r="9"/>';
+}
+function loadStage(key){
+  curBuild=key;const ic=ICONS[key];
+  const stage=document.getElementById('stageIcon');
+  stage.innerHTML=buildGuides(key)+ic.svg;
+  document.getElementById('bTitle').innerHTML=`${ic.en} <span class="cn" style="font-size:16px;color:var(--mut)">${ic.zh}</span>`;
+  document.getElementById('bRole').textContent=tr(ic.role)+' · '+ic.en;
+  document.getElementById('bWhy').textContent=tr(ic.why);
+  document.getElementById('bSteps').innerHTML=tr(ic.steps).map((s,i)=>`<li><span class="n">0${i+1}</span><span><b>${s[0]}</b>　${s[1]}</span></li>`).join('');
+  document.querySelectorAll('#buildPick button').forEach(b=>b.classList.toggle('on',b.dataset.k===key));
+  applyMode(stageMode);
+}
+function applyMode(mode){
+  const shown=mode;stageMode=(mode==='replay')?'draw':mode;
+  const stage=document.getElementById('stageIcon');
+  document.querySelectorAll('#stagebar button').forEach(b=>b.classList.toggle('on',b.dataset.mode===shown));
+  document.querySelector('.glines').style.opacity=(shown==='grid')?'1':'.3';
+  stage.classList.toggle('showguide',shown==='guide');
+  stage.classList.remove('drawn');void stage.offsetWidth;
+  setTimeout(()=>stage.classList.add('drawn'),40);
+}
+function renderPick(){
+  const pick=document.getElementById('buildPick');pick.innerHTML='';
+  buildKeys.forEach(k=>{const ic=ICONS[k];
+    pick.insertAdjacentHTML('beforeend',`<button data-k="${k}"><svg viewBox="0 0 24 24">${ic.svg}</svg>${ic.zh==ic.en?ic.en:tr({zh:ic.zh,en:ic.en})}</button>`);});
+  pick.querySelectorAll('.dw').forEach(p=>p.style.strokeDashoffset='0');
+  pick.querySelectorAll('.fdw').forEach(p=>p.style.opacity='1');
+  pick.onclick=e=>{const b=e.target.closest('button');if(b)loadStage(b.dataset.k);};
+}
+
+/* library */
+const GROUPS=[['all',{zh:'全部',en:'All'}],['proc',{zh:'製程 · 場域',en:'Process'}],['func',{zh:'職能 · 單位',en:'Functions'}],['mat',{zh:'材質族',en:'Families'}],['status',{zh:'狀態',en:'Status'}]];
+const ioLib=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const s=e.target.querySelector('.ico svg');if(s)s.classList.add('drawn');ioLib.unobserve(e.target);}}),{threshold:.2});
+function iconColor(g,key){if(g==='mat'){const f=FAM.find(x=>x.key===key);return f?f.ui:'var(--graphite)';}return 'var(--graphite)';}
+function renderGroups(){const gt=document.getElementById('groupTab');gt.innerHTML='';
+  GROUPS.forEach((g,i)=>gt.insertAdjacentHTML('beforeend',`<button class="${g[0]===curGroup?'on':''}" data-g="${g[0]}">${tr(g[1])}</button>`));
+  gt.onclick=e=>{const b=e.target.closest('button');if(!b)return;curGroup=b.dataset.g;
+    gt.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderLib();};
+}
+function renderLib(){
+  const lib=document.getElementById('lib');lib.innerHTML='';let items=[];
+  Object.keys(ICONS).forEach(k=>{if(curGroup==='all'||ICONS[k].g===curGroup)items.push({k,...ICONS[k]});});
+  if(curGroup==='all'||curGroup==='status')STATUS.forEach(s=>items.push({k:s.key,g:'status',zh:s.zh,en:s.en,svg:s.svg,_c:s.c,why:s.why}));
+  items.forEach(it=>{
+    const color=it._c||iconColor(it.g,it.k);
+    const card=document.createElement('div');card.className='card';card.dataset.k=it.k;
+    card.innerHTML=`<div class="gridbg"></div>
+      <div class="ico" style="color:${color}"><svg viewBox="0 0 24 24">${it.svg}</svg></div>
+      <div class="nm">${tr({zh:it.zh,en:it.en})}</div><div class="en">${it.en}</div>
+      <div class="rat">${it.why?tr(it.why):''}</div>`;
+    lib.appendChild(card);ioLib.observe(card);
+    if(ICONS[it.k]&&buildKeys.includes(it.k))
+      card.addEventListener('click',()=>{document.getElementById('symbols').scrollIntoView({behavior:'smooth'});setTimeout(()=>loadStage(it.k),500);});
+  });
+}
+
+/* status strip */
+function renderStatus(){const strip=document.getElementById('statusStrip');strip.innerHTML='';
+  STATUS.forEach(s=>strip.insertAdjacentHTML('beforeend',
+    `<div class="st"><div class="bar" style="background:${s.c}"></div>
+      <span style="color:${s.c}"><svg viewBox="0 0 24 24" style="width:30px;height:30px">${s.svg}</svg></span>
+      <div class="txt"><b>${tr({zh:s.zh,en:s.en})}</b><small>${tr(s.why)}</small></div></div>`));
+  strip.querySelectorAll('.dw').forEach(p=>p.style.strokeDashoffset='0');
+  strip.querySelectorAll('.fdw').forEach(p=>p.style.opacity='1');
+}
+
+/* naming split on scroll */
+const ioName=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
+  const fn=document.getElementById('fname');
+  fn.querySelectorAll('.seg').forEach(s=>{s.style.background=s.dataset.c+'1F';s.style.color=s.dataset.c;});
+  setTimeout(()=>fn.classList.add('split'),350);ioName.disconnect();
+}}),{threshold:.5});
+
+/* ======= HERO clean-sweep canvas ======= */
+(function(){
+  const cv=document.getElementById('cleanCanvas'),ctx=cv.getContext('2d');
+  const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let W,H,DPR,parts=[],sweep=0,phase=0,t0,raf,famX=[];
+  const famUI=FAM.map(f=>f.ui);
+  function resize(){DPR=Math.min(2,window.devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;
+    cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);
+    famX=FAM.map((_,i)=>W*0.16+ (W*0.68)*(i/(FAM.length-1)));}
+  function seed(){parts=[];const n=Math.round(W/7);for(let i=0;i<n;i++)parts.push({
+    x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.5,a:Math.random()*.5+.25,
+    vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15,cleared:0});}
+  function run(){resize();seed();sweep=0;phase=0;t0=performance.now();
+    document.getElementById('hero').classList.remove('cleaned');
+    const ro=document.getElementById('readout');ro.textContent='CONTAMINATION · 汙染';
+    cancelAnimationFrame(raf);
+    if(reduce){drawClean();ro.textContent='CLEAN · 潔淨';document.getElementById('hero').classList.add('cleaned');return;}
+    raf=requestAnimationFrame(loop);}
+  function loop(t){const el=t-t0;ctx.clearRect(0,0,W,H);
+    // grid faint
+    ctx.strokeStyle='rgba(15,20,25,.05)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=48){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    // start sweep after 900ms
+    if(el>900&&phase===0){phase=1;document.getElementById('readout').textContent='CLEANING · 清潔中';}
+    if(phase>=1)sweep+=W/70;
+    // particles
+    parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;
+      if(phase>=1&&p.x<sweep&&!p.cleared)p.cleared=1;
+      if(p.cleared){p.a-=.06;}
+      if(p.a>0){ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle=`rgba(88,101,115,${Math.max(0,p.a)})`;ctx.fill();}
+    });
+    // sweep line
+    if(phase>=1&&sweep<W+40){
+      const g=ctx.createLinearGradient(sweep-30,0,sweep+6,0);
+      g.addColorStop(0,'rgba(46,114,196,0)');g.addColorStop(1,'rgba(46,114,196,.5)');
+      ctx.fillStyle=g;ctx.fillRect(sweep-30,0,36,H);
+      ctx.strokeStyle='rgba(46,114,196,.85)';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(sweep,0);ctx.lineTo(sweep,H);ctx.stroke();
+    }
+    // nodes fade in as sweep passes them
+    ctx.textAlign='center';ctx.font='10px "IBM Plex Mono"';
+    famX.forEach((x,i)=>{const passed=sweep>x;const na=passed?Math.min(1,(sweep-x)/60):0;if(na<=0)return;
+      const y=H*0.5;
+      ctx.globalAlpha=na;
+      // connecting line
+      if(i>0&&sweep>famX[i-1]){ctx.strokeStyle='rgba(15,20,25,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(famX[i-1],y);ctx.lineTo(x,y);ctx.stroke();}
+      drawNode(x,y,famUI[i],FAM[i].name);
+      ctx.globalAlpha=1;
+    });
+    if(sweep>W+60){phase=2;document.getElementById('readout').textContent='CLEAN · 潔淨';document.getElementById('hero').classList.add('cleaned');
+      // settle: draw clean final and stop with gentle pulse
+      pulse();return;}
+    raf=requestAnimationFrame(loop);
+  }
+  function drawNode(x,y,c,label){
+    ctx.beginPath();ctx.arc(x,y,15,0,7);ctx.strokeStyle=c;ctx.globalAlpha*=.35;ctx.lineWidth=1;ctx.stroke();ctx.globalAlpha/=.35;
+    ctx.beginPath();ctx.arc(x,y,6,0,7);ctx.fillStyle=c;ctx.fill();
+    ctx.fillStyle='rgba(88,101,115,.9)';ctx.fillText(label,x,y-24);
+  }
+  let pulseT;
+  function drawStatic(pt){ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='rgba(15,20,25,.05)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=48){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    const y=H*0.5;ctx.textAlign='center';ctx.font='10px "IBM Plex Mono"';
+    famX.forEach((x,i)=>{if(i>0){ctx.strokeStyle='rgba(15,20,25,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(famX[i-1],y);ctx.lineTo(x,y);ctx.stroke();}});
+    famX.forEach((x,i)=>{const s=1+Math.sin(pt/700+i)*0.06;ctx.save();
+      ctx.beginPath();ctx.arc(x,y,15*s,0,7);ctx.strokeStyle=famUI[i];ctx.globalAlpha=.32;ctx.lineWidth=1;ctx.stroke();ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(x,y,6,0,7);ctx.fillStyle=famUI[i];ctx.fill();
+      ctx.fillStyle='rgba(88,101,115,.9)';ctx.fillText(FAM[i].name,x,y-24);ctx.restore();});}
+  function pulse(){cancelAnimationFrame(raf);const st=performance.now();
+    (function p(t){drawStatic(t-st);pulseT=requestAnimationFrame(p);})(st);}
+  function drawClean(){resize();drawStatic(0);}
+  document.getElementById('replayBtn').addEventListener('click',()=>{cancelAnimationFrame(pulseT);run();});
+  window.addEventListener('resize',()=>{cancelAnimationFrame(pulseT);cancelAnimationFrame(raf);resize();if(reduce||document.getElementById('hero').classList.contains('cleaned'))drawClean();});
+  // kick off after fonts settle
+  setTimeout(run,300);
+})();
+
+/* ======= NEW: bands / bags / carts / code table ======= */
+const BAND_TC={noncu:'#0F1419',cu:'#0F1419',co:'#ffffff',metal:'#ffffff',dif:'#ffffff'};
+function renderBands(){
+  const el=document.getElementById('bandList');el.innerHTML='';
+  FAM.forEach((f,i)=>{const tc=BAND_TC[f.key];
+    el.insertAdjacentHTML('beforeend',
+     `<div class="band" style="background:${f.hi};color:${tc};transition-delay:${i*.08}s">
+        <span class="bshape">${shapeGlyph(f.shape, tc==='#ffffff'?'rgba(255,255,255,.92)':'rgba(15,20,25,.82)',30)}</span>
+        <span class="bname">${f.name}</span><span class="bcn">${tr({zh:f.zh,en:f.en})}</span>
+        <span class="bcodes">${f.lines.map(l=>`<span>${l}</span>`).join('')}</span>
+      </div>`);
+  });
+  const ob=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ob.unobserve(e.target);}}),{threshold:.25});
+  el.querySelectorAll('.band').forEach(b=>ob.observe(b));
+}
+
+function bagSvg(color,mode){
+  const st='rgba(15,20,25,.4)';
+  if(mode==='clear') return `<svg width="72" height="82" viewBox="0 0 72 82">
+    <path d="M24 16 v-6 h24 v6" fill="none" stroke="${st}" stroke-width="2"/>
+    <rect x="14" y="16" width="44" height="60" rx="4" fill="#fff" stroke="${st}" stroke-width="2" stroke-dasharray="4 4"/>
+    <line x1="14" y1="27" x2="58" y2="27" stroke="${st}" stroke-width="1.5"/></svg>`;
+  if(mode==='strap') return `<svg width="72" height="82" viewBox="0 0 72 82">
+    <path d="M24 16 v-6 h24 v6" fill="none" stroke="${st}" stroke-width="2"/>
+    <rect x="14" y="16" width="44" height="60" rx="4" fill="#fff" stroke="${st}" stroke-width="2" stroke-dasharray="4 4"/>
+    <rect x="10" y="44" width="52" height="12" rx="2" fill="${color}"/></svg>`;
+  return `<svg width="72" height="82" viewBox="0 0 72 82">
+    <path d="M24 16 v-6 h24 v6" fill="none" stroke="rgba(15,20,25,.35)" stroke-width="2"/>
+    <rect x="14" y="16" width="44" height="60" rx="4" fill="${color}" stroke="rgba(15,20,25,.28)" stroke-width="2"/>
+    <line x1="14" y1="27" x2="58" y2="27" stroke="rgba(15,20,25,.28)" stroke-width="1.5"/></svg>`;
+}
+const BAGS=[
+ {c:'#BFC3C7',mode:'clear',zh:'透明袋',en:'Clear',fam:{zh:'Non Cu 珍珠灰',en:'Non Cu · pearl'},lines:['FEOL','Non_Cu_PVD','Non_Cu_CVD'],type:'class'},
+ {c:'#D4A017',mode:'fill',zh:'黃袋',en:'Yellow',fam:{zh:'Cu 藏金黃',en:'Cu · gold'},lines:['BEOL_Cu','Cu_CVD','Cu_PVD'],type:'class'},
+ {c:'#3F9A5C',mode:'fill',zh:'綠袋',en:'Green',fam:{zh:'Co 椰子綠',en:'Co · green'},lines:['Co','Co_PVD','BEOL_Oxide'],type:'class'},
+ {c:'#2E6FB0',mode:'fill',zh:'藍袋',en:'Blue',fam:{zh:'Metal 浪漫藍',en:'Metal · blue'},lines:['BEOL','BEOL_Metal'],type:'class'},
+ {c:'#C0392B',mode:'fill',zh:'紅袋',en:'Red',fam:{zh:'異常 / 退貨',en:'Anomaly / return'},lines:[],type:'status'},
+];
+const BTAG={class:{zh:'分類',en:'Class'},status:{zh:'狀態',en:'Status'},pending:{zh:'待定',en:'Pending'}};
+const BTAGC={class:'#586573',status:'#C0392B',pending:'#7A6B8A'};
+function renderBags(){
+  const g=document.getElementById('bagGrid');g.innerHTML='';
+  BAGS.forEach(b=>{const tagc=BTAGC[b.type];
+    g.insertAdjacentHTML('beforeend',
+     `<div class="bag-card">
+        <span class="btag" style="background:${tagc}1A;color:${tagc}">${tr(BTAG[b.type])}</span>
+        <div class="bagsvg">${bagSvg(b.c,b.mode)}</div>
+        <h3>${tr({zh:b.zh,en:b.en})}</h3><div class="bsub">${tr(b.fam)}</div>
+        <div class="blines">${b.lines.map(l=>`<span>${l}</span>`).join('')||'<span style="opacity:.5">—</span>'}</div>
+      </div>`);
+  });
+  document.getElementById('bagNote').textContent=tr(L.bagNote);
+}
+
+/* CARTS */
+let cartFam='cu',cartStat='towash',cartLayers='3';
+function drawCartStatus(){
+  const stt=STATUS.find(x=>x.key===cartStat);const g=document.getElementById('cartStatus');
+  g.innerHTML=`<rect x="92" y="20" width="176" height="34" rx="7" fill="#fff" stroke="${stt.c}" stroke-width="1.5"/>
+    <rect x="92" y="20" width="6" height="34" rx="3" fill="${stt.c}"/>
+    <g transform="translate(106,25) scale(.72)" style="color:${stt.c}">${stt.svg}</g>
+    <text x="140" y="42" font-family="Noto Sans TC" font-size="14" font-weight="600" fill="#0F1419">${tr({zh:stt.zh,en:stt.en})}</text>`;
+  g.querySelectorAll('.dw').forEach(p=>p.style.strokeDashoffset='0');
+  g.querySelectorAll('.fdw').forEach(p=>p.style.opacity='1');
+}
+function cartShelf(y,color){
+  let s=`<rect x="82" y="${y}" width="196" height="8" rx="1.5" fill="#EEF2F6" stroke="var(--graphite)" stroke-width="2"/>`;
+  s+=`<rect class="cartColor" x="82" y="${y+8}" width="196" height="5" fill="${color}"/>`;
+  for(let dx=98;dx<=262;dx+=20.5)s+=`<circle cx="${dx.toFixed(1)}" cy="${y+4}" r="1.1" fill="rgba(15,20,25,.3)"/>`;
+  return s;
+}
+function drawCart(){
+  const f=FAM.find(x=>x.key===cartFam);const color=f.hi;
+  const ys = cartLayers==='3' ? [92,166,240] : [118,232];
+  const shelves=ys.map(y=>cartShelf(y,color)).join('');
+  const frame=`
+    <line x1="82" y1="84" x2="82" y2="252" stroke="var(--graphite)" stroke-width="4"/>
+    <line x1="278" y1="84" x2="278" y2="252" stroke="var(--graphite)" stroke-width="4"/>
+    <line x1="82" y1="84" x2="278" y2="84" stroke="var(--graphite)" stroke-width="4"/>
+    <path d="M82 84 V64 Q82 56 74 56 H58" fill="none" stroke="var(--graphite)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M278 84 V64 Q278 56 286 56 H302" fill="none" stroke="var(--graphite)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="102" y1="252" x2="102" y2="266" stroke="var(--graphite)" stroke-width="3"/>
+    <line x1="258" y1="252" x2="258" y2="266" stroke="var(--graphite)" stroke-width="3"/>
+    <circle cx="102" cy="277" r="12" fill="none" stroke="var(--graphite)" stroke-width="4"/>
+    <circle cx="258" cy="277" r="12" fill="none" stroke="var(--graphite)" stroke-width="4"/>
+    <rect class="cartColor" x="64" y="150" width="13" height="52" rx="3" fill="${color}"/>`;
+  document.getElementById('cartSvg').innerHTML=`<g id="cartStatus"></g>`+frame+shelves;
+  drawCartStatus();
+}
+function updateCart(){
+  drawCart();
+  document.querySelectorAll('#cartFam button').forEach(b=>b.classList.toggle('on',b.dataset.k===cartFam));
+  document.querySelectorAll('#cartStat button').forEach(b=>b.classList.toggle('on',b.dataset.k===cartStat));
+  document.querySelectorAll('#cartSizeOpts button').forEach(b=>b.classList.toggle('on',b.dataset.k===cartLayers));
+}
+function renderCarts(){
+  const fam=document.getElementById('cartFam');fam.innerHTML='';
+  FAM.forEach(f=>fam.insertAdjacentHTML('beforeend',
+    `<button data-k="${f.key}"><span class="sw" style="background:${f.hi}"></span>${f.name}</button>`));
+  const stt=document.getElementById('cartStat');stt.innerHTML='';
+  STATUS.forEach(x=>stt.insertAdjacentHTML('beforeend',
+    `<button data-k="${x.key}"><span class="sw" style="background:${x.c}"></span>${tr({zh:x.zh,en:x.en})}</button>`));
+  const sz=document.getElementById('cartSizeOpts');sz.innerHTML='';
+  [['3',{zh:'三層',en:'3-tier'}],['2',{zh:'二層',en:'2-tier'}]].forEach(x=>sz.insertAdjacentHTML('beforeend',`<button data-k="${x[0]}">${tr(x[1])}</button>`));
+  fam.onclick=e=>{const b=e.target.closest('button');if(b){cartFam=b.dataset.k;updateCart();}};
+  stt.onclick=e=>{const b=e.target.closest('button');if(b){cartStat=b.dataset.k;updateCart();}};
+  sz.onclick=e=>{const b=e.target.closest('button');if(b){cartLayers=b.dataset.k;updateCart();}};
+  document.getElementById('cartFamLab').textContent=tr(L.cartFamLab);
+  document.getElementById('cartStatLab').textContent=tr(L.cartStatLab);
+  document.getElementById('cartSizeLab').textContent=tr(L.cartSizeLab);
+  document.getElementById('cartNote').textContent=tr(L.cartNote);
+  updateCart();
+}
+
+/* CODE TABLE */
+const MATZH={noncu:['無銅','NONCU'],cu:['銅','CU'],co:['鈷','CO'],metal:['金屬','METAL'],dif:['擴散','DIF']};
+const pad=n=>String(n).padStart(2,'0');
+const tok=s=>s.replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+const zhtok=s=>s.split('/')[0].trim().replace(/\s/g,'');
+function buildCodes(){
+  const rows=[];const proc=[],func=[];
+  Object.keys(ICONS).forEach(k=>{if(ICONS[k].g==='proc')proc.push(k);else if(ICONS[k].g==='func')func.push(k);});
+  let i;
+  i=0;proc.forEach(k=>{i++;const ic=ICONS[k];rows.push({grp:'PROC',code:`PROC-${pad(i)}-${zhtok(ic.zh)}-${tok(ic.en)}`,zh:ic.zh,en:ic.en,svg:ic.svg,c:'var(--graphite)'});});
+  i=0;func.forEach(k=>{i++;const ic=ICONS[k];rows.push({grp:'FUNC',code:`FUNC-${pad(i)}-${zhtok(ic.zh)}-${tok(ic.en)}`,zh:ic.zh,en:ic.en,svg:ic.svg,c:'var(--graphite)'});});
+  i=0;FAM.forEach(f=>{i++;const m=MATZH[f.key];rows.push({grp:'MAT',code:`MAT-${pad(i)}-${m[0]}-${m[1]}`,zh:m[0],en:m[1],svg:ICONS[f.key].svg,c:f.ui});});
+  i=0;STATUS.forEach(x=>{i++;rows.push({grp:'STAT',code:`STAT-${pad(i)}-${zhtok(x.zh)}-${tok(x.en)}`,zh:x.zh,en:x.en,svg:x.svg,c:x.c});});
+  return rows;
+}
+function renderCodeTable(){
+  document.getElementById('codeTitle').textContent=tr(L.codeTitle);
+  document.getElementById('codeDesc').textContent=tr(L.codeDesc);
+  document.getElementById('codeHead').innerHTML=tr(L.codeHead).map(h=>`<th>${h}</th>`).join('');
+  const body=document.getElementById('codeBody');
+  body.innerHTML=buildCodes().map(r=>
+    `<tr><td class="code">${r.code}</td>
+       <td><span class="ico24" style="color:${r.c};display:inline-block"><svg viewBox="0 0 24 24" style="width:22px;height:22px">${r.svg}</svg></span></td>
+       <td style="color:var(--ink)">${r.zh}</td><td>${r.en}</td><td class="grp">${r.grp}</td></tr>`).join('');
+  body.querySelectorAll('.dw').forEach(p=>p.style.strokeDashoffset='0');
+  body.querySelectorAll('.fdw').forEach(p=>p.style.opacity='1');
+}
+
+/* ======= language switch ======= */
+function setLang(l){lang=l;
+  document.querySelectorAll('#langTog button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  applyStatic();renderI18nBlocks();renderPrin();renderFam();renderBands();renderBags();renderCarts();renderPick();renderGroups();renderLib();renderStatus();renderCodeTable();loadStage(curBuild);
+}
+document.getElementById('langTog').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setLang(b.dataset.l);});
+
+/* ======= init ======= */
+renderStageGrid();
+applyStatic();renderI18nBlocks();renderPrin();renderFam();renderBands();renderBags();renderCarts();renderPick();renderGroups();renderLib();renderStatus();renderCodeTable();loadStage('chem');
+ioName.observe(document.getElementById('fname'));
+
+/* card draw css */
+const st=document.createElement('style');
+st.textContent='.card .ico svg .dw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s ease}.card .ico svg.drawn .dw{stroke-dashoffset:0}.card .ico svg .fdw{opacity:0;transition:opacity .4s .3s}.card .ico svg.drawn .fdw{opacity:1}';
+document.head.appendChild(st);
+</script>
+</body>
+</html>
